@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: accounts
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:accountsdb
+    username: we
+    password: we
+    driverClassName: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+      show-sql: true
+
+
+server:
+  port: ${SERVER_PORT:8080}
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %clr([%thread]) %clr(%-5level) %clr(%logger{36}){cyan} - %msg%n"

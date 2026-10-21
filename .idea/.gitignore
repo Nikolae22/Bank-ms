@@ -8,3 +8,24 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+
+# --- IntelliJ moduli e configurazioni ---
+*.iml
+.classpath
+.project
+.settings/
+
+# --- Maven / Compilazione microservizi ---
+**/target/
+
+# --- File di log e Java ---
+*.log
+*.class
+hs_err_pid*
+
+# --- File di sistema ---
+.DS_Store
+Thumbs.db
+
+# --- I tuoi file di teoria/appunti ---
+*.txt

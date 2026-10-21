@@ -3,11 +3,8 @@ package com.cards.entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.cglib.core.Local;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -38,5 +35,5 @@ public class BaseEntity {
 
     @NotEmpty
     @LastModifiedDate
-    private Local updatedAt;
+    private LocalDateTime updatedAt;
 }

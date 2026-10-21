@@ -1,0 +1,18 @@
+per creare un iamge con gogole jib im pom xml priam del buidlr maven
+quella va lasciare metti
+ <plugin>
+        <groupId>com.google.cloud.tools</groupId>
+        <artifactId>jib-maven-plugin</artifactId>
+        <version>3.5.2</version>
+        <configuration>
+          <to>
+            <image>myimage</image>
+          </to>
+        </configuration>
+      </plugin>
+
+mvn compile jib:dockerBuild
+
+mvn compile jib:build
+posso usare sto comando per creare il build senza per forza metter il docker
+

@@ -1,0 +1,11 @@
+per crare limagine con Builder pack devo mettere in pom xl
+
+questo in plugins  plugin sotto maven
+<configuration>
+  <image>
+   <name> nicolae22/${project.artifactId}:s4</name>
+  </image>
+ </configuration>
+
+ poi in console scrivee
+ mvn spring-boot:build-image

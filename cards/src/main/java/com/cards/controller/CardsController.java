@@ -1,6 +1,7 @@
 package com.cards.controller;
 
 import com.cards.constants.CardsConstants;
+import com.cards.dto.CardsContactInfo;
 import com.cards.dto.CardsDto;
 import com.cards.dto.ErrorResponseDto;
 import com.cards.dto.ResponseDto;
@@ -16,6 +17,8 @@ import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +39,13 @@ public class CardsController {
     private final Logger logger= LoggerFactory.getLogger(CardsController.class);
 
     private final ICardsService iCardsService;
+
+    private final CardsContactInfo cardsContactInfo;
+
+    @Value("${build.version}")
+    private String buildVersion;
+
+    private final Environment environment;
 
 
     @Operation(
@@ -161,5 +171,44 @@ public class CardsController {
                     .status(HttpStatus.EXPECTATION_FAILED)
                     .body(new ResponseDto(CardsConstants.STATUS_417,CardsConstants.MESSAGE_417_DELETE));
         }
+    }
+
+
+    @Operation(
+            summary = "Get build info",
+            description = "Get build information that is deployed in cards ms"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode =  "200",
+                    description = "HTTP Status OK"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "HTTP Status Internal Server Error",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+
+    })
+    @GetMapping("/build-info")
+    public ResponseEntity<String> getBuildInfo(){
+        return ResponseEntity.ok()
+                .body(buildVersion);
+    }
+
+
+    @GetMapping("/java-version")
+    public ResponseEntity<String> getJavaVersion(){
+        return ResponseEntity.ok()
+                .body(environment.getProperty("JAVA_HOME"));
+    }
+
+
+    @GetMapping("/contact-info")
+    public ResponseEntity<CardsContactInfo> getContactInfo(){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(cardsContactInfo);
     }
 }

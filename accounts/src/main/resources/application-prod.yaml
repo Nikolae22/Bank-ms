@@ -1,0 +1,11 @@
+build:
+  version: 3.0
+
+accounts:
+  message: "This is accounts ms API in prod"
+  contactDetails:
+    name: "We are in prod is dark"
+    email: "whoKnows@gmail.com"
+  onCallSupport:
+    - "00000000"
+    - "11111111"

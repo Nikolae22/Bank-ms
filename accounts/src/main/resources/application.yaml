@@ -13,11 +13,13 @@ spring:
     hibernate:
       ddl-auto: update
       show-sql: true
+  config:
+    import: "optional:configserver:http://localhost:8071/"
 
   profiles:
     active:
-      - "qa"
-      #- "prod"
+      - "prod"
+      #- "qa"
 
 
 server:
@@ -27,14 +29,3 @@ logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %clr([%thread]) %clr(%-5level) %clr(%logger{36}){cyan} - %msg%n"
 
-build:
-  version: 1.0
-
-accounts:
-  message: "This is accounts ms API"
-  contactDetails:
-    name: "Java developer easy"
-    email: "whoKnows@gmail.com"
-  onCallSupport:
-    - "00000000"
-    - "11111111"

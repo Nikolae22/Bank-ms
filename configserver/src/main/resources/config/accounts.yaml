@@ -1,0 +1,12 @@
+
+build:
+  version: 1.0
+
+accounts:
+  message: "This is accounts ms API"
+  contactDetails:
+    name: "Java developer easy"
+    email: "whoKnows@gmail.com"
+  onCallSupport:
+    - "00000000"
+    - "11111111"

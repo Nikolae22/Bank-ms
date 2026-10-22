@@ -1,0 +1,11 @@
+build:
+  version: 1.0
+
+cards:
+  message: "This is cards ms API"
+  contactDetails:
+    name: "Java developer easy"
+    email: "whoKnows@gmail.com"
+  onCallSupport:
+    - "00000000"
+    - "11111111"

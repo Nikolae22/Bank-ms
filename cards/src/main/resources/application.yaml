@@ -14,6 +14,14 @@ spring:
       ddl-auto: update
       show-sql: true
 
+  config:
+    import: "optional:configserver:http://localhost:8071/"
+
+  profiles:
+    active:
+      - "prod"
+      #- "qa"
+
 
 server:
   port: ${SERVER_PORT:9000}
@@ -21,15 +29,3 @@ server:
 logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %clr([%thread]) %clr(%-5level) %clr(%logger{36}){cyan} - %msg%n"
-
-build:
-  version: 1.0
-
-cards:
-  message: "This is cards ms API"
-  contactDetails:
-    name: "Java developer easy"
-    email: "whoKnows@gmail.com"
-  onCallSupport:
-    - "00000000"
-    - "11111111"

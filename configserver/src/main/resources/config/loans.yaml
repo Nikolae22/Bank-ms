@@ -1,0 +1,11 @@
+build:
+  version: 2.0
+
+loans:
+  message: "This is loans ms API "
+  contactDetails:
+    name: "Java backend"
+    email: "whoKnows@gmail.com"
+  onCallSupport:
+    - "00000000"
+    - "11111111"

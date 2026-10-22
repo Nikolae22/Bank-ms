@@ -14,6 +14,13 @@ spring:
       ddl-auto: update
       show-sql: true
 
+  config:
+    import: "optional:configserver:http://localhost:8071/"
+
+  profiles:
+    active:
+      - "prod"
+      #- "qa"
 
 server:
   port: ${SERVER_PORT:8090}
@@ -21,15 +28,3 @@ server:
 logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %clr([%thread]) %clr(%-5level) %clr(%logger{36}){cyan} - %msg%n"
-
-build:
-  version: 2.0
-
-loans:
-  message: "This is loans ms API "
-  contactDetails:
-    name: "Java backend"
-    email: "whoKnows@gmail.com"
-  onCallSupport:
-    - "00000000"
-    - "11111111"

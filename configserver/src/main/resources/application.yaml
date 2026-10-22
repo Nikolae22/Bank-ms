@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: configserver
+
+  profiles:
+    active: native #questo native dice aconfigsevrer di prenderel e configgurazioni da qua
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/config
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %clr([%thread]) %clr(%-5level) %clr(%logger{36}){cyan} - %msg%n"
+
+
+server:
+  port: 8071

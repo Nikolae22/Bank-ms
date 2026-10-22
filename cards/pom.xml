@@ -96,7 +96,7 @@
                 <version>3.5.2</version>
                 <configuration>
                     <to>
-                        <image>nicolae22/${project.artifactId}:s4</image>
+                        <image>nicolae22/${project.artifactId}:s6</image>
                     </to>
                 </configuration>
             </plugin>

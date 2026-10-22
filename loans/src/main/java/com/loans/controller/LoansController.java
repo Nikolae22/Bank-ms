@@ -2,6 +2,7 @@ package com.loans.controller;
 
 import com.loans.constants.LoansConstants;
 import com.loans.dto.ErrorResponseDto;
+import com.loans.dto.LoansContactInfo;
 import com.loans.dto.LoansDto;
 import com.loans.dto.ResponseDto;
 import com.loans.service.ILoansService;
@@ -13,8 +14,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +27,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Validated
 @Tag(
         name = "CRUD REST APIs for Loans"
@@ -33,6 +37,12 @@ public class LoansController {
     private final Logger logger = LoggerFactory.getLogger(LoansController.class);
 
     private final ILoansService iLoansService;
+    private final LoansContactInfo loansContactInfo;
+
+    private  Environment environment;
+
+    @Value("${build.version}")
+    private String buildVersion;
 
     @Operation(
             summary = "Create Loan REST API"
@@ -158,5 +168,43 @@ public class LoansController {
                     .body(new ResponseDto(LoansConstants.STATUS_417, LoansConstants.MESSAGE_417_DELETE));
 
         }
+    }
+
+    @Operation(
+            summary = "Get build info",
+            description = "Get build information that is deployed in loans ms"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode =  "200",
+                    description = "HTTP Status OK"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "HTTP Status Internal Server Error",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+
+    })
+    @GetMapping("/build-info")
+    public ResponseEntity<String> getBuildInfo(){
+        return ResponseEntity.ok()
+                .body(buildVersion);
+    }
+
+
+    @GetMapping("/java-version")
+    public ResponseEntity<String> getJavaVersion(){
+        return ResponseEntity.ok()
+                .body(environment.getProperty("JAVA_HOME"));
+    }
+
+
+    @GetMapping("/contact-info")
+    public ResponseEntity<LoansContactInfo> getContactInfo(){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(loansContactInfo);
     }
 }

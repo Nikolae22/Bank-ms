@@ -1,0 +1,10 @@
+build:
+  version: 3.0
+loans:
+  message: "This is loans ms API in prod"
+  contactDetails:
+    name: "We are in prod is dark"
+    email: "whoKnows@gmail.com"
+  onCallSupport:
+    - "00000000"
+    - "11111111"

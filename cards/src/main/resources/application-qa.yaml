@@ -1,0 +1,11 @@
+build:
+  version: 2.0
+
+cards:
+  message: "This is cards ms API QA"
+  contactDetails:
+    name: "We are in QA Rainbow"
+    email: "whoKnows@gmail.com"
+  onCallSupport:
+    - "00000000"
+    - "11111111"

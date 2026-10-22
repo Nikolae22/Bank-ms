@@ -3,12 +3,21 @@ spring:
     name: configserver
 
   profiles:
-    active: native #questo native dice aconfigsevrer di prenderel e configgurazioni da qua
+    active: git
+    #active: native #questo native dice aconfigsevrer di prenderel e configgurazioni da qua
   cloud:
     config:
       server:
-        native:
-          search-locations: classpath:/config
+        git:
+          uri: "https://github.com/Nikolae22/application-confg.git"
+          default-label: main
+          timeout: 5
+          clone-on-start: true
+          force-pull: true
+#        native:
+#          search-locations: classpath:/config
+encrypt:
+  key: "89SA7DUAISDHA83923IUAWHJKDAS8"
 
 logging:
   pattern:

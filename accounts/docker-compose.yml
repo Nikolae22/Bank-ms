@@ -1,7 +1,51 @@
 name: bank-ms
 services:
+  rabbit:
+    image: rabbitmq:latest
+    container_name: shop-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    deploy:
+      resources:
+        limits:
+          memory: 512
+    healthcheck:
+      test: rabbitmq-diagnostics check_port_connectivity
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+    networks:
+      - bank
+
+  configserver:
+    image: nicolae22/configserver:s6
+    container_name: configserver
+    restart: unless-stopped
+    ports:
+      - "8071:8071"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    healthcheck:
+      test: ["CMD", "bash", "-c","exec3<>/dev/tcp/127.0.0.1/8071 && printf 'GET /actuator/health/readiness HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n' >&3 && grep -q '\"status\":\"UP\"' <&3"]
+#      test: "curl --fail --silent localhost:8071/actuator/health/rediness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+    depends_on:
+      rabbit:
+        condition: service_healthy
+    environment:
+      SPRING_RABBITMQ_HOST: "rabbit"
+    networks:
+      - bank
+
   accounts:
-    image: nicolae22/accounts:s4
+    image: nicolae22/accounts:s6
     container_name: accounts-ms
     restart: unless-stopped
     ports:
@@ -10,11 +54,18 @@ services:
       resources:
         limits:
           memory: 700m
+    depends_on:
+      configserver:
+        condition: service_healthy
+    environment:
+      SPRING_RABBITMQ_HOST: "rabbit"
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      SPRING_PROFILES_ACTIVE: default
     networks:
       - bank
 
   loans:
-    image: nicolae22/loans:s4
+    image: nicolae22/loans:s6
     container_name: loans-ms
     restart: unless-stopped
     ports:
@@ -23,11 +74,18 @@ services:
       resources:
         limits:
           memory: 700m
+    depends_on:
+      configserver:
+        condition: service_healthy
+    environment:
+      SPRING_RABBITMQ_HOST: "rabbit"
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      SPRING_PROFILES_ACTIVE: default
     networks:
       - bank
 
   cards:
-    image: nicolae22/cards:s4
+    image: nicolae22/cards:s6
     container_name: cards-ms
     restart: unless-stopped
     ports:
@@ -36,6 +94,13 @@ services:
       resources:
         limits:
           memory: 700m
+    depends_on:
+      configserver:
+        condition: service_healthy
+    environment:
+      SPRING_RABBITMQ_HOST: "rabbit"
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      SPRING_PROFILES_ACTIVE: default
     networks:
       - bank
 

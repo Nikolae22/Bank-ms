@@ -8,6 +8,8 @@ spring:
   cloud:
     config:
       server:
+        monitor:
+          validation-filter-enabled: false
         git:
           uri: "https://github.com/Nikolae22/application-confg.git"
           default-label: main
@@ -16,12 +18,32 @@ spring:
           force-pull: true
 #        native:
 #          search-locations: classpath:/config
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    username: "guest"
+    password: "guest"
 encrypt:
   key: "89SA7DUAISDHA83923IUAWHJKDAS8"
 
 logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %clr([%thread]) %clr(%-5level) %clr(%logger{36}){cyan} - %msg%n"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
+  endpoint:
+    health:
+      probes:
+        enabled: true
 
 
 server:

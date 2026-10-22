@@ -97,5 +97,94 @@ enviroment variables-> SPTING_PROFILES_ACTIVE=prod;BUILD_VERSION=1.8
 
 # sping cloud bus non posso fare il refresh manuale a 100ms no?
  : links nodes ofa  distribuited system witha a lightweight message broker
+ percio si usa Rabbitmq
+ # latest RabbitMQ 4.x
+ docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:4-management
+  <dependency>
+             <groupId>org.springframework.cloud</groupId>
+             <artifactId>spring-cloud-starter-bus-amqp</artifactId>
+         </dependency>
+   rabbitmq:
+     host: "localhost"
+     port: 5672
+     username: "guest"
+     password: "guest"
+
+  anche se ingori qeusto spring boot si connete in autoamtico perche sono defualt questi
+  se cambi questi devi metterli
+   http://localhost:8071/loans/prod -> questo fa in autoamtico invece
+   invece per far funzionare questo http://localhost:8080/api/contact-info
+   devi -> http://localhost:8080/actuator/busrefresh ->
+   dopo di qeusto su uno tutti cambiano
+  comuque cosi ce smerpe una perosna che lo deve fare
+
+  # invece il full autoamtico con il webhook su github e autoamtico
+  in config server
+   <dependency>
+               <groupId>org.springframework.cloud</groupId>
+               <artifactId>spring-cloud-config-monitor</artifactId>
+           </dependency>
+    cosi arriva in autmatico dal web hook
+    e anche gisutamente
+    management:
+      endpoints:
+        web:
+          exposure:
+            include: "*"
+
+    e un altra annotation per disabilatere security
+    push notification and spring cloud bus
+    http://localhost:8071/monitor
+
+    we need to disabling weebhook validation
+      cloud:
+        config:
+          server:
+            monitor:
+              validation-filter-enabled: false
+    solo in config server
+
+    webhooks in git hub
+    payload url : http://localhost:8071/monitor
+
+    non fa percio ci server hookdeck per itest di sta cosa
+    console-> add destination-> e creao
+    con i vari comamndi nel locale
+    quando prendo hookdeck listen -> cambio le cose cosi
+    hookdeck listen 8071 Source --cli-path /monitor
+    dopo fatto questo in lcaol sistem si toran su github
+    si cambia il paylod url in qeullo che ci ha datto hookdeck dal termianle
+    content type : json
+
+    mvn compile jib:dockerBuild
+
+    #LIVENESS AND READINESS
+    probe sends a signal tahta the container or application is either alive or dead. if is alive
+    then no action is required becuasue is good. if is dead an attempt should be made to heal
+    the application by restarting it
+    in simple words libinesess is a true or false question is this container alive
+
+    READINESS: is if the app is ready to receinving network traifc. if it still alive but cannot
+    handle incoming netwrok u want the readiness probe to fall so that traffic will not be
+    sent to a container which isnt ready for it
+    if someone prematurely send network  trafffic tothe ontaienr it could case the load balanceer
+    reaturn a 502 roor to the client and temriante the reqeust
+    simple word is reaad uto recieve network trafic or not
+    management:
+      endpoints:
+        web:
+          exposure:
+            include: "*"
+      health:
+        readiness-state:
+          enabled: true
+        liveness-state:
+          enabled: true
+        endpoint:
+          health:
+            probes:
+              enabled: true
+
+
 
 

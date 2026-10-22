@@ -56,3 +56,46 @@ enviroment variables-> SPTING_PROFILES_ACTIVE=prod;BUILD_VERSION=1.8
         server:
           native:
             search-locations: classpath:/config  questo dove sono le properties
+
+ -in un file lcoation cioe cartella locale sad
+ lunica cosa che cambia
+ search-locations: "file:e la path della cartella"
+ - in github repository
+  profiles:
+    active: git
+    #active: native #questo native dice aconfigsevrer di prenderel e configgurazioni da qua
+  cloud:
+    config:
+      server:
+        git:
+          uri: "https://github.com/Nikolae22/application-confg.git"
+          default-label: main
+          timeout: 5
+          clone-on-start: true
+          force-pull: true
+
+  -config server fa encrypt delel cose con questa proprtieta
+  encrypt:
+    key: "89SA7DUAISDHA83923IUAWHJKDAS8"
+  e poi http://localhost:8071/encrypt  || decrypt
+  metto nel body text quello che voglio fare encryupt poi lo cambio su gothub repository al psot del plain text
+  mettendo davatni all valore che mi da {cipher}
+
+  // how to restart i microservizi da soli con un flag
+
+  sprign boot actuator must
+   e impost in applciation property questo
+   management:
+     endpoints:
+       web:
+         exposure:
+           include: "*"
+
+   http://localhost:8071/loans/prod ->  the link   to chekc is in config server no quello locale
+    per farlo anche quello con 8080 del ms
+    POST http://localhost:8080/actuator/refresh e poi fuznioan cneh il metodo get ingo
+
+# sping cloud bus non posso fare il refresh manuale a 100ms no?
+ : links nodes ofa  distribuited system witha a lightweight message broker
+
+

@@ -28,3 +28,9 @@ server:
 logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %clr([%thread]) %clr(%-5level) %clr(%logger{36}){cyan} - %msg%n"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

@@ -185,6 +185,13 @@ enviroment variables-> SPTING_PROFILES_ACTIVE=prod;BUILD_VERSION=1.8
             probes:
               enabled: true
 
+ # commando per chekc di docker compose
+ docker compose config epr vedere se ci sono bug
+
+ docker for my sql
+ docker run -p 3306:3306 --name accountsdb -e MYSQL_ROOT_PASSWORD=root
+            -e MYSQL_DATABASE=accountsdb -v "path for volumes"  -d mysql
+
 
 
 

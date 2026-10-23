@@ -18,11 +18,11 @@ spring:
           force-pull: true
 #        native:
 #          search-locations: classpath:/config
-  rabbitmq:
-    host: "localhost"
-    port: 5672
-    username: "guest"
-    password: "guest"
+#  rabbitmq:
+#    host: "localhost"
+#    port: 5672
+#    username: "guest"
+#    password: "guest"
 encrypt:
   key: "89SA7DUAISDHA83923IUAWHJKDAS8"
 

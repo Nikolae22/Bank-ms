@@ -19,7 +19,7 @@ services:
       interval: 10s
       start_period: 10s
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:we}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-we}
 
 
   microservice-base-config:
@@ -40,3 +40,9 @@ services:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILE:-default}
       SPRING_DATASOURCE_USERNAME: we
       SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-we}
+
+  microservice-eureka-config:
+    extends:
+      service: microservice-configserver-config
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/

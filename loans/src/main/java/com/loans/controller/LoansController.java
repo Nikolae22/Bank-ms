@@ -39,7 +39,7 @@ public class LoansController {
     private final ILoansService iLoansService;
     private final LoansContactInfo loansContactInfo;
 
-    private  Environment environment;
+    private Environment environment;
 
     @Value("${build.version}")
     private String buildVersion;
@@ -89,8 +89,11 @@ public class LoansController {
     }
     )
     @GetMapping("/fetch")
-    public ResponseEntity<LoansDto> fetchLoanDetails(@RequestParam
-                                                     String mobileNumber) {
+    public ResponseEntity<LoansDto> fetchLoanDetails(
+            @RequestHeader("bank-correlation-id") String correlationId,
+            @RequestParam
+            String mobileNumber) {
+        logger.debug("bank-correlation-id found {}",correlationId);
         LoansDto loansDto = iLoansService.fetchLoan(mobileNumber);
         return ResponseEntity.status(HttpStatus.OK).body(loansDto);
     }
@@ -176,7 +179,7 @@ public class LoansController {
     )
     @ApiResponses({
             @ApiResponse(
-                    responseCode =  "200",
+                    responseCode = "200",
                     description = "HTTP Status OK"
             ),
             @ApiResponse(
@@ -189,21 +192,21 @@ public class LoansController {
 
     })
     @GetMapping("/build-info")
-    public ResponseEntity<String> getBuildInfo(){
+    public ResponseEntity<String> getBuildInfo() {
         return ResponseEntity.ok()
                 .body(buildVersion);
     }
 
 
     @GetMapping("/java-version")
-    public ResponseEntity<String> getJavaVersion(){
+    public ResponseEntity<String> getJavaVersion() {
         return ResponseEntity.ok()
                 .body(environment.getProperty("JAVA_HOME"));
     }
 
 
     @GetMapping("/contact-info")
-    public ResponseEntity<LoansContactInfo> getContactInfo(){
+    public ResponseEntity<LoansContactInfo> getContactInfo() {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(loansContactInfo);
     }

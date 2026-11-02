@@ -57,9 +57,17 @@ management:
     web:
       exposure:
         include: "*"
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
   endpoint:
     shutdown:
       access: unrestricted
+    health:
+      probes:
+        enabled: true
   info:
     env:
       enabled: true
@@ -69,3 +77,7 @@ info:
     name: "accounts"
     description: "Accounts ms"
     version: "1.0.0"
+
+level:
+  com:
+    accounts: DEBUG

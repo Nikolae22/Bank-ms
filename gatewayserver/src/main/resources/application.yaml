@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: gatewayserver
+
+  config:
+    import: "optional:configserver:http://localhost:8071/"
+
+  cloud:
+    gateway:
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: false #questo mi serve per vedere configuraioni in localhst:8072/actuator/gateway/routes nel true
+              lowerCaseServiceId: true
+
+server:
+  port: ${SERVER_PORT:8080}
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %clr([%thread]) %clr(%-5level) %clr(%logger{36}){cyan} - %msg%n"
+  level:
+    com:
+      gatewayserver: debug
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      access: unrestricted
+  info:
+    env:
+      enabled: true
+
+info:
+  app:
+    name: "gatewayserver"
+    description: "Gateway server app"
+    version: "1.0.0"
